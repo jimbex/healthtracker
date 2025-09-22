@@ -1,6 +1,8 @@
-import models.User  // Import the User class from models package
+import controllers.UserStore  // Import the User class from models package
+import models.User
+import utils.checkGender
 
-var user = User()  // Create a global User object to store user details
+val userStore = UserStore()// Create a global User object to store user details
 
 fun main(){
     println("Welcome to Health Tracker")
@@ -34,7 +36,7 @@ fun runApp(){
 }
 
 fun addUser(){
-    val allowed = setOf('A', 'B', 'C') // Currently unused, maybe for future validation
+    val user = User()
     println("Please enter the following for the user: ")
 
     // Take user details from console input
@@ -47,21 +49,20 @@ fun addUser(){
     do{
         print("     Enter gender (M/F/O):  ")
         user.gender = readlnOrNull()?.firstOrNull()?: ' '
-    }while(checkGender() == 1)
+    }while(checkGender(user.gender) == 1)
 
     // Take numeric ID, fallback to -1 if invalid
     print("     Id: ")
     user.id = readlnOrNull()?.toIntOrNull() ?: -1
+    print("     Weight: ")
+    user.weight = readlnOrNull()?.toDoubleOrNull() ?: -1.0
+    print("     Height: ")
+    user.height = readlnOrNull()?.toFloatOrNull() ?: -1.0f
+
+    userStore.create(user)
 }
 
 fun listUser(){
     // Display user details using User's toString() implementation
-    print("The user details are: $user")
-}
-
-fun checkGender(): Int{
-    // Validate gender input, return 0 if valid, 1 if invalid
-    if (user.gender in setOf('M', 'F', 'O')){
-        return 0
-    }else{return 1}
+    println("The user details are: ${userStore.findAll()}")
 }

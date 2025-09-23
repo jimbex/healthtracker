@@ -13,6 +13,9 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:2.0.0")
+    implementation("io.github.oshai:kotlin-logging:7.0.0")
+    implementation("org.slf4j:slf4j-api:2.0.16")
+    implementation("org.slf4j:slf4j-simple:2.0.16")
 }
 
 tasks.test {

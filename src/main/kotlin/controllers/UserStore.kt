@@ -20,6 +20,11 @@ class UserStore {
         return users.find { p -> p.id == id }
     }
 
+    fun findGender(gender: Char): List <User> {
+        return users.filter { it.gender == gender }
+    }
+
+
     fun delete(id: Int): User? {
         val index = getUserIndexById(id)
         return if (index != -1) {
